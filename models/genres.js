@@ -13,7 +13,11 @@ const Genre = sequelize.define(
         name: {
             type: DataTypes.STRING,
         },
-        img:{
+        urlImage: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        filenameImage: {
             type: DataTypes.STRING,
         },
     },

@@ -14,11 +14,15 @@ const Movie = sequelize.define(
         title: {
             type: DataTypes.STRING,
         },
-        img: {
+        urlImage: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        filenameImage: {
             type: DataTypes.STRING,
         },
         dateRelease: {
-            type: DataTypes.STRING,
+            type: DataTypes.DATE,
         },
         rating: {
             type: DataTypes.ENUM([1, 2, 3, 4, 5])
