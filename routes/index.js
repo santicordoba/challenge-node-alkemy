@@ -1,5 +1,5 @@
 const fs = require('fs');
-const router = express.Router();
+const router = require('express').Router();
 
 const PATH_ROUTES = `${__dirname}`;
 

@@ -15,6 +15,12 @@ app.use(express.json());
 
 const port = process.env.PORT || 3000;
 
+
+/**
+ * Invocacion de las rutas
+ */
+ app.use("/api", require("./routes"));
+
 /**
  * 
  * Se lanza la app en el puerto guardado en .env
