@@ -14,11 +14,7 @@ const Movie = sequelize.define(
         title: {
             type: DataTypes.STRING,
         },
-        urlImage: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        filenameImage: {
+        image: {
             type: DataTypes.STRING,
         },
         dateRelease: {

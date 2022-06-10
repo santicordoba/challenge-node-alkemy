@@ -1,5 +1,7 @@
 const { characterModel }  = require('../models');
 
+const { matchedData } = require('express-validator');
+
 const getItems = async (req, res) => {
     try{
         const data = await characterModel.findAll({});
@@ -10,7 +12,8 @@ const getItems = async (req, res) => {
 };
 const getItem = async (req, res) => {
     try{
-        const id = req.params.id;
+        req = matchedData(req);
+        const {id} = req;
         const data = await characterModel.findByPk(id);
         res.send({data});
     }catch(e){
@@ -19,8 +22,8 @@ const getItem = async (req, res) => {
 };
 const createItem = async (req, res) => {
     try{
-        const {body} = req;
-        const data = await characterModel.create(body);
+        req = matchedData(req);
+        const data = await characterModel.create(req);
         res.send(data);
     }catch(e){
         console.log(e);
@@ -28,8 +31,8 @@ const createItem = async (req, res) => {
 };
 const updateItem = async (req, res) => {
     try{
-        const id = req.params.id;
-        const data = await characterModel.update(req.body, {where: {id}});
+        const {id, ...body} = matchedData(req);
+        const data = await characterModel.update(body, {where: {id}});
         res.send({data});
     }catch(e){
         console.log(e);
@@ -37,7 +40,8 @@ const updateItem = async (req, res) => {
 };
 const deleteItem = async (req, res) => {
     try{
-        const id = req.params.id;
+        req = matchedData(req);
+        const {id} = req;
         const data = await characterModel.destroy({where: {id}});
         res.send({data});
     }catch(e){  

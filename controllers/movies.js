@@ -1,4 +1,11 @@
 const { movieModel }  = require('../models');
+/**
+ * 
+ * para validar que el request body
+ * corresponda con el modelo
+ * 
+ */
+const { matchedData } = require('express-validator');
 
 const getItems = async (req, res) => {
     try{
@@ -10,17 +17,18 @@ const getItems = async (req, res) => {
 };
 const getItem = async (req, res) => {
     try{
-        const id = req.params.id;
+        req = matchedData(req);
+        const {id} = req;
         const data = await movieModel.findByPk(id);
         res.send( {data} );
     }catch(e){
-        cosnole.log(e);
+        console.log(e);
     }
 };
 const createItem = async (req, res) => {
     try{
-        const {body} = req;
-        const data = await movieModel.create(body);
+        req = matchedData(req);
+        const data = await movieModel.create(req);
         res.send( {data} );
     }catch(e){
         console.log(e);
@@ -28,8 +36,7 @@ const createItem = async (req, res) => {
 };
 const updateItem = async (req, res) => {
     try{
-        const id = req.params.id;
-        const {body} = req;
+        const {id, ...body} = matchedData(req);
         const data = await movieModel.update(body, {where: {id}});
         res.send( {data} );
     }catch(e){
@@ -38,7 +45,8 @@ const updateItem = async (req, res) => {
 };
 const deleteItem = async (req, res) => {
     try{
-        const id = req.params.id;
+        req = matchedData(req);
+        const {id} = req;
         const data = await movieModel.destroy({where: {id}});
         res.send({data});
     }catch(e){

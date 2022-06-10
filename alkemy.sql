@@ -25,8 +25,7 @@ DROP TABLE IF EXISTS `characters`;
 CREATE TABLE `characters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `urlImage` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-  `filenameImage` mediumtext COLLATE utf8_unicode_ci NOT NULL,
+  `image` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `age` int(11) NOT NULL,
   `weight` double NOT NULL,
   `history` text COLLATE utf8_unicode_ci NOT NULL,
@@ -55,8 +54,7 @@ DROP TABLE IF EXISTS `genres`;
 CREATE TABLE `genres` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `urlImage` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-  `filenameImage` mediumtext COLLATE utf8_unicode_ci NOT NULL,
+  `image` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -82,8 +80,7 @@ DROP TABLE IF EXISTS `movies`;
 CREATE TABLE `movies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `urlImage` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-  `filenameImage` mediumtext COLLATE utf8_unicode_ci NOT NULL,
+  `image` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `dateRelease` date NOT NULL,
   `rating` enum('1','2','3','4','5') COLLATE utf8_unicode_ci NOT NULL DEFAULT '3',
   `createdAt` datetime NOT NULL,

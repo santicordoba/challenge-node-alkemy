@@ -1,8 +1,14 @@
 const { genreModel }  = require('../models');
+/**
+ * 
+ * para validar que el request body
+ * corresponda con el modelo
+ * 
+ */
+const { matchedData } = require('express-validator');
 
 const getItems = async (req, res) => {
     try{
-        console.log("hola")
         const data = await genreModel.findAll({});
         res.send( {data} )
     }catch(e){
@@ -11,8 +17,8 @@ const getItems = async (req, res) => {
 };
 const getItem = async (req, res) => {
     try{
-        const id = req.params.id;
-        console.log(id);
+        req = matchedData(req);
+        const {id} = req;
         const data = await genreModel.findByPk(id);
         res.send( {data} )
     }catch(e){
@@ -21,8 +27,8 @@ const getItem = async (req, res) => {
 };
 const createItem = async (req, res) => {
     try{
-        const {body} = req;
-        const data = await genreModel.create(body);
+        req = matchedData(req);
+        const data = await genreModel.create(req);
         res.send( {data} );
     }catch(e){
         console.log(e);
@@ -30,8 +36,7 @@ const createItem = async (req, res) => {
 };
 const updateItem = async (req, res) => {
     try{
-        const id = req.params.id;
-        const {body} = req;
+        const {id, ...body} = matchedData(req);
         const data = await genreModel.update(body, {where: {id}});
         res.send( {data} );
     }catch(e){
@@ -40,7 +45,8 @@ const updateItem = async (req, res) => {
 };
 const deleteItem = async (req, res) => {
     try{
-        const id = req.params.id;
+        req = matchedData(req);
+        const {id} = req;
         const data = await genreModel.destroy({where: {id}});
         res.send({data});
     }catch(e){
