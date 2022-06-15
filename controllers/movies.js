@@ -9,8 +9,37 @@ const { matchedData } = require('express-validator');
 
 const getItems = async (req, res) => {
     try{
-        const data = await movieModel.findAll({});
-        res.send( {data} )
+        if(Object.keys(req.query).length === 0){
+            const data = await movieModel.findAll({
+                where : req.query
+            });
+            res.send( {data} )
+        } else {
+            if(req.query["name"]){
+                const data = await movieModel.findAll({
+                    where : { title: req.query.name
+                    }
+            });
+            res.send( {data} );
+        } else {
+            if(req.query["genre"]){
+                const data = await movieModel.findAll({
+                    where : { idGenre: req.query.genre
+                    }
+            });
+            res.send( {data} );
+            } else {
+                if(req.query["order"]){
+                    const order = req.query.order;
+                    const data = await movieModel.findAll({
+                        order: [["title", order]]
+                    });
+                    res.send( {data} );
+                } else {
+                    throw new Error("Parametro no valido");
+                }
+        }
+    }}
     }catch(e){
         console.log(e);
     }

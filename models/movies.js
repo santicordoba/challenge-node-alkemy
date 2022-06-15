@@ -23,6 +23,9 @@ const Movie = sequelize.define(
         rating: {
             type: DataTypes.ENUM([1, 2, 3, 4, 5])
         },
+        idGenre: {
+            type: DataTypes.INTEGER,
+        }
     },
     {
         timestamps: true

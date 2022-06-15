@@ -6,6 +6,7 @@ const validatorCreateItem = [
     check("image").exists().isString().notEmpty(),
     check("dateRelease").exists().isDate().notEmpty(),
     check("rating").exists().isInt(),
+    check("idGenre").exists().notEmpty(),
     (req, res, next) => {
         return validateResults(req, res, next);
     }

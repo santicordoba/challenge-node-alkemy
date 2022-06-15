@@ -15,7 +15,7 @@ const Genre = sequelize.define(
         },
         image: {
             type: DataTypes.STRING,
-        },
+        }
     },
     {
         timestamps: true

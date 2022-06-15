@@ -4,12 +4,28 @@ const { matchedData } = require('express-validator');
 
 const getItems = async (req, res) => {
     try{
-        const data = await characterModel.findAll({});
+        const data = await characterModel.findAll({
+            where : req.query
+        });
         res.send( {data} );
     }catch(e){
         console.log(e);
     }
 };
+
+const getItemsByName = async (req, res) => {
+    try{
+        req = matchedData(req);
+        const {name} = req;
+        console.log(name);
+        const data = await characterModel.findAll({where: {name}});
+        res.send({data});
+    }catch(e){
+        console.log(e);
+    }
+}
+
+
 const getItem = async (req, res) => {
     try{
         req = matchedData(req);
