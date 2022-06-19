@@ -1,4 +1,4 @@
-const { movieModel, moviesCharactersModel }  = require('../models');
+const { movieModel }  = require('../models');
 /**
  * 
  * para validar que el request body
@@ -56,24 +56,9 @@ const getItem = async (req, res) => {
 };
 const createItem = async (req, res) => {
     try{
-        if(req.body.idCharacter){
-            console.log("Trae idPersonaje")
-            var idCharacter = req.body.idCharacter;
-            req = matchedData(req);
-            const data = await movieModel.create(req);
-
-            //Crear la relacion entre la pelicula y el personaje
-            bodyCharacterMovie = {
-                idMovie: data.dataValues.id,
-                idCharacter: idCharacter
-            }
-            const dataMC = await moviesCharactersModel.create(bodyCharacterMovie);
-            res.send( {data} );            
-        } else {
-            req = matchedData(req);
-            const data = await movieModel.create(req);
-            res.send( {data} );
-        }
+        req = matchedData(req);
+        const data = await movieModel.create(req);
+        res.send( {data} );
     }catch(e){
         console.log(e);
     }
