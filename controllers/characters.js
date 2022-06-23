@@ -1,36 +1,42 @@
-const { characterModel }  = require('../models');
+const { characterModel, movieModel }  = require('../models');
 
 const { matchedData } = require('express-validator');
 
 const getItems = async (req, res) => {
     try{
-        const data = await characterModel.findAll({
-            where : req.query
-        });
-        res.send( {data} );
+        if(Object.keys(req.query).length === 0){
+            const data = await characterModel.findAll({
+                attributes: ['name', 'image']
+            });
+            res.send( {data} );
+        } else {
+            const data = await characterModel.findAll({
+                where : req.query
+            });
+            res.send( {data} );
+        }
     }catch(e){
         console.log(e);
     }
 };
 
-const getItemsByName = async (req, res) => {
-    try{
-        req = matchedData(req);
-        const {name} = req;
-        console.log(name);
-        const data = await characterModel.findAll({where: {name}});
-        res.send({data});
-    }catch(e){
-        console.log(e);
-    }
-}
-
-
 const getItem = async (req, res) => {
     try{
         req = matchedData(req);
         const {id} = req;
-        const data = await characterModel.findByPk(id);
+        const data = await characterModel.findOne({
+            include: {
+                model: movieModel,
+                through: {
+                    attributes: [],
+            },
+            attributes: ["title", "image", "dateRelease"],
+            },
+            attributes: ["name", "age", "weight", "history", "image"],
+            where: {
+                id,
+            },
+        });
         res.send({data});
     }catch(e){
         console.log(e);

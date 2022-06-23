@@ -11,7 +11,8 @@ const getItems = async (req, res) => {
     try{
         if(Object.keys(req.query).length === 0){
             const data = await movieModel.findAll({
-                where : req.query
+                where : req.query,
+                attributes: ['title', 'image', 'dateRelease']
             });
             res.send( {data} )
         } else {
