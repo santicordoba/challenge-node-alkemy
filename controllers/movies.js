@@ -1,4 +1,5 @@
-const { movieModel }  = require('../models');
+const { movieModel, characterModel }  = require('../models');
+const { handleHttpError } = require('../utils/handleHttpError');
 /**
  * 
  * para validar que el request body
@@ -42,17 +43,29 @@ const getItems = async (req, res) => {
         }
     }}
     }catch(e){
-        console.log(e);
+        handleHttpError(res, "ERROR_GETALLITEMS_MOVIES")
     }
 };
 const getItem = async (req, res) => {
     try{
         req = matchedData(req);
         const {id} = req;
-        const data = await movieModel.findByPk(id);
+        const data = await movieModel.findOne({
+            include: {
+                model: characterModel,
+                through: {
+                    attributes: [],
+                },
+                attributes: ['name', 'image', 'age', 'weight', 'history'],
+            },
+            attributes: ['title', 'image', 'dateRelease', 'rating', 'idGenre'],
+            where: {
+                id,
+            }
+        });
         res.send( {data} );
     }catch(e){
-        console.log(e);
+        handleHttpError(res, "ERROR_GETITEM_MOVIES")
     }
 };
 const createItem = async (req, res) => {
@@ -61,7 +74,7 @@ const createItem = async (req, res) => {
         const data = await movieModel.create(req);
         res.send( {data} );
     }catch(e){
-        console.log(e);
+        handleHttpError(res, "ERROR_CREATEITEM_MOVIES")
     }
 };
 const updateItem = async (req, res) => {
@@ -70,7 +83,7 @@ const updateItem = async (req, res) => {
         const data = await movieModel.update(body, {where: {id}});
         res.send( {data} );
     }catch(e){
-        console.log(e);
+        handleHttpError(res, "ERROR_UPDATEITEM_MOVIES")
     }
 };
 const deleteItem = async (req, res) => {
@@ -80,7 +93,7 @@ const deleteItem = async (req, res) => {
         const data = await movieModel.destroy({where: {id}});
         res.send({data});
     }catch(e){
-        console.log(e);
+        handleHttpError(res, "ERROR_DELETEITEM_MOVIES")
     }
 };
 

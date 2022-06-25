@@ -1,4 +1,5 @@
 const { moviesCharactersModel } = require('../models');
+const { handleHttpError } = require('../utils/handleHttpError');
 /**
  * 
  * para validar que el request body
@@ -12,7 +13,7 @@ const getItems = async (req, res) => {
         const data = await moviesCharactersModel.findAll({});
         res.send( {data} )
     }catch(e){
-        console.log(e);
+        handleHttpError(res, "ERROR_GETALLITEMS_RELATIONMOVIECHARACTER")
     }
 }
 
@@ -23,7 +24,7 @@ const deleteItem = async (req, res) => {
         const data = await moviesCharactersModel.destroy({where: {id}});
         res.send({data});
     }catch(e){
-        console.log(e);
+        handleHttpError(res, "ERROR_DELETEITEM_RELATIONMOVIECHARACTER");
     }
 }
 
@@ -33,7 +34,7 @@ const createItem = async (req, res) => {
         const data = await moviesCharactersModel.create(req);
         res.send( {data} );
     }catch(e){
-        console.log(e);
+        handleHttpError(res, "ERROR_CREATEITEM_RELATIONMOVIECHARACTER");
     }
 }
 

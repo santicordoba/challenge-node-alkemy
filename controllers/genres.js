@@ -1,4 +1,5 @@
 const { genreModel }  = require('../models');
+const { handleHttpError } = require('../utils/handleHttpError');
 /**
  * 
  * para validar que el request body
@@ -12,7 +13,7 @@ const getItems = async (req, res) => {
         const data = await genreModel.findAll({});
         res.send( {data} )
     }catch(e){
-        console.log(e);
+        handleHttpError(res, "ERROR_GETALLITEMS_GENRES");
     }
 };
 const getItem = async (req, res) => {
@@ -22,7 +23,7 @@ const getItem = async (req, res) => {
         const data = await genreModel.findByPk(id);
         res.send( {data} )
     }catch(e){
-        console.log(e);
+        handleHttpError(res, "ERROR_GETITEM_GENRES");
     }
 };
 const createItem = async (req, res) => {
@@ -31,7 +32,7 @@ const createItem = async (req, res) => {
         const data = await genreModel.create(req);
         res.send( {data} );
     }catch(e){
-        console.log(e);
+        handleHttpError(res, "ERROR_CREATEITEM_GENRES");
     }
 };
 const updateItem = async (req, res) => {
@@ -40,7 +41,7 @@ const updateItem = async (req, res) => {
         const data = await genreModel.update(body, {where: {id}});
         res.send( {data} );
     }catch(e){
-        console.log(e);
+        handleHttpError(res, "ERROR_UPDATEITEM_GENRES");
     }
 };
 const deleteItem = async (req, res) => {
@@ -50,7 +51,7 @@ const deleteItem = async (req, res) => {
         const data = await genreModel.destroy({where: {id}});
         res.send({data});
     }catch(e){
-        console.log(e);
+        handleHttpError(res, "ERROR_DELETEITEM_GENRES");
     }
 };
 
