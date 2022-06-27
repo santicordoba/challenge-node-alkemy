@@ -2,6 +2,7 @@ const { sequelize } = require('../config/mysql');
 const { DataTypes } = require('sequelize');
 const moviesModel = require('../models/movies');
 const charactersModel = require('../models/characters');
+const genreModel = require('../models/genres');
 
 /**
  * 
@@ -31,5 +32,6 @@ const MoviesCharacters = sequelize.define(
  */
 moviesModel.belongsToMany(charactersModel, { through: 'MoviesCharacters', foreignKey: 'idMovie', });
 charactersModel.belongsToMany(moviesModel, { through: 'MoviesCharacters', foreignKey: 'idCharacter', });
+
 
 module.exports = MoviesCharacters;

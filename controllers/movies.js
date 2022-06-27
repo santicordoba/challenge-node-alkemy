@@ -1,4 +1,4 @@
-const { movieModel, characterModel }  = require('../models');
+const { movieModel, characterModel, genreModel }  = require('../models');
 const { handleHttpError } = require('../utils/handleHttpError');
 /**
  * 
@@ -61,7 +61,7 @@ const getItem = async (req, res) => {
             attributes: ['title', 'image', 'dateRelease', 'rating', 'idGenre'],
             where: {
                 id,
-            }
+            },
         });
         res.send( {data} );
     }catch(e){
